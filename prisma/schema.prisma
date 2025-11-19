@@ -3,7 +3,11 @@ generator client {
 }
 
 datasource db {
+<<<<<<< HEAD
   provider = "sqlite"
+=======
+  provider = "postgresql"
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
   url      = env("DATABASE_URL")
 }
 
@@ -30,6 +34,7 @@ enum PaymentMethod {
 }
 
 model User {
+<<<<<<< HEAD
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
@@ -46,10 +51,31 @@ model User {
 
 model Hotel {
   id        Int      @id @default(autoincrement())
+=======
+  id           Int        @id @default(autoincrement())
+  email        String     @unique
+  password     String
+  name         String
+  role         UserRole   @default(USER)
+  refreshToken String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  bookings     Booking[]  @relation("UserBookings", onDelete: Cascade)
+  tours        Tour[]     @relation(onDelete: Cascade)
+  transfers    Transfer[] @relation(onDelete: Cascade)
+
+  @@index([email])
+  @@index([role])
+}
+
+model Hotel {
+  id        Int       @id @default(autoincrement())
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
   name      String
   address   String
   city      String
   country   String
+<<<<<<< HEAD
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -59,10 +85,24 @@ model Hotel {
 
 model Room {
   id          Int      @id @default(autoincrement())
+=======
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[] @relation(onDelete: SetNull)
+  rooms     Room[]    @relation(onDelete: Cascade)
+
+  @@index([city])
+  @@index([country])
+}
+
+model Room {
+  id          Int       @id @default(autoincrement())
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
   hotelId     Int
   name        String
   price       Float
   description String?
+<<<<<<< HEAD
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -86,21 +126,72 @@ model Booking {
   payment Payment?
   tour    Tour?    @relation(fields: [tourId], references: [id])
   tourId  Int?
+=======
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[] @relation(onDelete: SetNull)
+  hotel       Hotel     @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  @@index([hotelId])
+}
+
+model Booking {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  tourId    Int?
+  hotelId   Int?
+  roomId    Int?
+  startDate DateTime?
+  endDate   DateTime?
+  status    String    @default("PENDING")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user    User     @relation("UserBookings", fields: [userId], references: [id], onDelete: Cascade)
+  tour    Tour?    @relation(fields: [tourId], references: [id], onDelete: SetNull)
+  hotel   Hotel?   @relation(fields: [hotelId], references: [id], onDelete: SetNull)
+  room    Room?    @relation(fields: [roomId], references: [id], onDelete: SetNull)
+  payment Payment? @relation(onDelete: Cascade)
+
+  @@index([userId])
+  @@index([hotelId])
+  @@index([roomId])
+  @@index([tourId])
+  @@index([status])
+  @@index([createdAt])
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
 }
 
 model Payment {
   id        Int           @id @default(autoincrement())
+<<<<<<< HEAD
   bookingId String        @unique
+=======
+  bookingId Int           @unique
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
   amount    Float
   method    PaymentMethod
   status    PaymentStatus @default(PENDING)
   createdAt DateTime      @default(now())
+<<<<<<< HEAD
 
   booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 }
 
 model Tour {
   id          Int      @id @default(autoincrement())
+=======
+  updatedAt DateTime      @updatedAt
+  booking   Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId])
+  @@index([status])
+  @@index([method])
+}
+
+model Tour {
+  id          Int       @id @default(autoincrement())
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
   title       String
   description String?
   price       Float
@@ -109,11 +200,19 @@ model Tour {
   duration    String?
   location    String?
   userId      Int
+<<<<<<< HEAD
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   bookings Booking[]
+=======
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookings Booking[] @relation(onDelete: SetNull)
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
 
   @@index([userId])
   @@index([startDate])
@@ -129,8 +228,12 @@ model Transfer {
   price     Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+<<<<<<< HEAD
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
 
   @@index([userId])
   @@index([date])

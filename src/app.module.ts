@@ -4,7 +4,11 @@ import { PrismaModule } from './prisma/prisma.module';
 import { BookingModule } from './booking/booking.module';
 import { PaymentModule } from './payment/payment.module';
 import { TransferModule } from './transfers/transfer.module';
+<<<<<<< HEAD
 import { HotelsModule } from './hotel/hotels.module';
+=======
+import { HotelModule } from './hotel/hotel.module';
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
 import { RoomsModule } from './room/rooms.module';
 import { TourModule } from './tours/tour.module';
 import { UsersModule } from './users/users.module';
@@ -24,7 +28,11 @@ import { PublicGuard } from './auth/guards/public.guard';
     BookingModule,
     TourModule,
     RoomsModule,
+<<<<<<< HEAD
     HotelsModule,
+=======
+    HotelModule,
+>>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
     TransferModule,
     PaymentModule,
   ],
