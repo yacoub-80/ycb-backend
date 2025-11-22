@@ -1,15 +1,14 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { HotelService } from './hotel.service';
-import { CreateHotelDto } from './dto/create-hotel.dto';
-import { UpdateHotelDto } from './dto/update-hotel.dto';
+import { Hotel } from '@prisma/client';
 
 @Controller('hotels')
 export class HotelController {
-  constructor(private readonly hotelService: HotelService) {}
+  constructor(private hotelService: HotelService) {}
 
   @Post()
-  create(@Body() dto: CreateHotelDto) {
-    return this.hotelService.create(dto);
+  create(@Body() data: Hotel) {
+    return this.hotelService.create(data);
   }
 
   @Get()
@@ -19,16 +18,6 @@ export class HotelController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.hotelService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateHotelDto) {
-    return this.hotelService.update(+id, dto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.hotelService.remove(+id);
+    return this.hotelService.findOne(Number(id));
   }
 }

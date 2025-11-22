@@ -1,28 +1,4 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-<<<<<<< HEAD
-
-
-export class CreateHotelDto {
-@IsString()
-@IsNotEmpty()
-name: string;
-
-
-@IsString()
-@IsNotEmpty()
-address: string;
-
-
-@IsString()
-@IsNotEmpty()
-city: string;
-
-
-@IsString()
-@IsNotEmpty()
-country: string;
-}
-=======
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateHotelDto {
@@ -46,4 +22,3 @@ export class CreateHotelDto {
   @IsNotEmpty()
   country: string;
 }
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab

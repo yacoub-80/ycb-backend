@@ -1,80 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
-<<<<<<< HEAD
-=======
-import { UpdatePaymentDto } from './dto/update-payment.dto';
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
+import { Prisma, Payment } from '@prisma/client';
 
 @Injectable()
 export class PaymentService {
   constructor(private prisma: PrismaService) {}
 
-  create(dto: CreatePaymentDto) {
+  async create(data: Prisma.PaymentCreateInput): Promise<Payment> {
     return this.prisma.payment.create({
-<<<<<<< HEAD
-      data: {
-        bookingId: String(dto.bookingId),
-        amount: dto.amount,
-        method: dto.method,
-        status: dto.status,
-      },
-=======
-      data: dto,
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
+      data,
+      include: { booking: true },
     });
   }
 
-  findAll() {
-<<<<<<< HEAD
-    return this.prisma.payment.findMany();
-  }
-
-  findOne(id: number) {
-    return this.prisma.payment.findUnique({ where: { id } });
-  }
-
-  update(id: number, dto: CreatePaymentDto) {
-    return this.prisma.payment.update({
-      where: { id },
-      data: {
-        bookingId: String(dto.bookingId),
-        amount: dto.amount,
-        method: dto.method,
-        status: dto.status,
-=======
+  async findAll(): Promise<Payment[]> {
     return this.prisma.payment.findMany({
-      include: {
-        booking: true,
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
-      },
+      include: { booking: true },
     });
   }
 
-<<<<<<< HEAD
-  remove(id: number) {
-    return this.prisma.payment.delete({ where: { id } });
-=======
-  findOne(id: number) {
+  async findOne(id: number): Promise<Payment | null> {
     return this.prisma.payment.findUnique({
       where: { id },
-      include: {
-        booking: true,
-      },
+      include: { booking: true },
     });
   }
 
-  update(id: number, dto: UpdatePaymentDto) {
+  async update(id: number, data: Prisma.PaymentUpdateInput): Promise<Payment> {
     return this.prisma.payment.update({
       where: { id },
-      data: dto,
+      data,
+      include: { booking: true },
     });
   }
 
-  remove(id: number) {
+  async remove(id: number): Promise<Payment> {
     return this.prisma.payment.delete({
       where: { id },
+      include: { booking: true },
     });
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
   }
 }

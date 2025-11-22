@@ -1,48 +1,33 @@
-<<<<<<< HEAD
-import { Controller, Post, Get, Param, Body, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
 import { PaymentService } from './payment.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('payment')
 export class PaymentController {
-  constructor(private service: PaymentService) {}
-=======
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PaymentService } from './payment.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
-import { UpdatePaymentDto } from './dto/update-payment.dto';
-
-@Controller('payments')
-export class PaymentController {
-  constructor(private readonly service: PaymentService) {}
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
+  constructor(private readonly paymentService: PaymentService) {}
 
   @Post()
-  create(@Body() dto: CreatePaymentDto) {
-    return this.service.create(dto);
+  create(@Body() data: Prisma.PaymentCreateInput) {
+    return this.paymentService.create(data);
   }
 
   @Get()
   findAll() {
-    return this.service.findAll();
+    return this.paymentService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.service.findOne(+id);
+    return this.paymentService.findOne(+id);
   }
 
   @Patch(':id')
-<<<<<<< HEAD
-  update(@Param('id') id: string, @Body() dto: CreatePaymentDto) {
-=======
-  update(@Param('id') id: string, @Body() dto: UpdatePaymentDto) {
->>>>>>> 49fbee8d892a743e886f4c3289e98fbc05eb3aab
-    return this.service.update(+id, dto);
+  update(@Param('id') id: string, @Body() data: Prisma.PaymentUpdateInput) {
+    return this.paymentService.update(+id, data);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.service.remove(+id);
+    return this.paymentService.remove(+id);
   }
 }

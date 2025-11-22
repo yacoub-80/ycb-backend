@@ -1,34 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { RoomsService } from './rooms.service';
-import { CreateRoomDto } from './dto/create-room.dto';
-import { UpdateRoomDto } from './dto/update-room.dto';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { RoomService } from './room.service';
+import { Room } from '@prisma/client';
 
 @Controller('rooms')
-export class RoomsController {
-  constructor(private readonly roomsService: RoomsService) {}
+export class RoomController {
+  constructor(private roomService: RoomService) {}
 
   @Post()
-  create(@Body() dto: CreateRoomDto) {
-    return this.roomsService.create(dto);
+  create(@Body() data: Room) {
+    return this.roomService.create(data);
   }
 
   @Get()
   findAll() {
-    return this.roomsService.findAll();
+    return this.roomService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.roomsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateRoomDto) {
-    return this.roomsService.update(+id, dto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.roomsService.remove(+id);
+    return this.roomService.findOne(Number(id));
   }
 }
